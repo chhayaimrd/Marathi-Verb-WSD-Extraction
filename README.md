@@ -4,13 +4,13 @@ Overview
 This repository contains the dataset and custom Python extraction scripts developed for identifying and analyzing ambiguous Marathi verbs within a domain-specific corpus. The resources provided here support the foundational work for Word Sense Disambiguation (WSD) in Marathi, specifically focusing on the high degree of morphological and semantic ambiguity inherent in verbs.
 
 Files Included
-verb_extraction.py
+verblist.py
 
 The custom Python script utilized to parse the Indian Languages Corpora Initiative (ILCI) POS tags.
 
 It identifies verb tokens (tagged with #V) and isolates the root verb forms from the raw corpus text.
 
-marathi_annotated_verbs.csv
+MARATHI VERB LIST.csv
 
 The final extracted dataset comprising 131 unique Marathi verb lemmas.
 
