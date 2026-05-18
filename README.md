@@ -1,42 +1,30 @@
-# Marathi-Verb-WSD-Extraction
-Python extraction scripts and annotated dataset of 131 Marathi verbs from the Tourism Corpus.
-Overview
-This repository contains the dataset and custom Python extraction scripts developed for identifying and analyzing ambiguous Marathi verbs within a domain-specific corpus. The resources provided here support the foundational work for Word Sense Disambiguation (WSD) in Marathi, specifically focusing on the high degree of morphological and semantic ambiguity inherent in verbs.
+# Marathi Verb Sense Disambiguation: Corpus Extraction and Empirical Evaluation
 
-Files Included
-verblist.py
+**Associated Publication:** *Addressing Data Sparsity in Marathi Verb Sense Disambiguation: A Comparative Evaluation of Contextual Transformers and Statistical Baselines*
 
-The custom Python script utilized to parse the Indian Languages Corpora Initiative (ILCI) POS tags.
+## Overview
+This repository contains the datasets and Google Colab notebooks required to reproduce the verb extraction pipeline and the Word Sense Disambiguation (WSD) experiments detailed in our research. 
 
-It identifies verb tokens (tagged with #V) and isolates the root verb forms from the raw corpus text.
+The project focuses on extracting ambiguous verbs from the TDIL Marathi Tourism Corpus and comparing the performance of a traditional statistical baseline (TF-IDF + SVM) against a contextual deep learning architecture (MahaBERT).
 
-MARATHI VERB LIST.csv
+## Repository Structure
 
-The final extracted dataset comprising 131 unique Marathi verb lemmas.
+### 1. Data Files
+* `MARATHI_VERB_LIST.csv`: The complete extracted dataset comprising all 131 unique Marathi verb lemmas identified in the corpus. It includes their total corpus frequencies and corresponding Marathi WordNet Sense Identifiers.
+* `polysemous_marathi_verbs.csv`: The finalized subset of highly ambiguous Marathi verb lemmas extracted from the master list. It includes only the specific verbs (having $\ge$ 2 senses) used to train the machine learning models.
+* *(Note: The raw 39,000-sentence TDIL Tourism Corpus text files are not hosted here directly, but the provided notebook is designed to process standard ILCI-tagged `.txt` folder structures).*
 
-Features include the verb lemma, corpus frequency, polysemy count, and the corresponding Marathi WordNet unique sense identifiers.
+### 2. Code Files
+* `verblist.ipynb`: A comprehensive Google Colab-compatible Jupyter Notebook containing the entire project pipeline. It includes:
+  * Directory parsing and raw text extraction (isolating `#V` tags).
+  * Filtering logic based on the polysemous verbs CSV.
+  * Singleton removal and stratified train/test splitting.
+  * Experiment A: Support Vector Machine (SVM) training.
+  * Experiment B: Transformer fine-tuning using `l3cube-pune/marathi-bert-v2` (MahaBERT).
 
-Data Source
-The verbs were extracted from the Tourism Corpus, originally developed under the Technology Development for Indian Languages (TDIL) project at IIT Bombay. The corpus consists of approximately 39,000 sentences annotated with POS tags.
+## Computational Environment and Prerequisites
+To execute the experimental notebook effortlessly, we recommend using Google Colab with a GPU runtime (e.g., NVIDIA T4) enabled.
 
-Requirements
-To execute the extraction script, ensure your computational environment meets the following specifications:
-
-Python 3.7 or higher
-
-Standard data processing libraries (e.g., pandas, re)
-
-Text encoding configured to UTF-8 to correctly process the Devanagari script.
-
-Instructions for Use
-Download the raw, POS-tagged Tourism corpus text files (available via the TDIL portal).
-
-Place the corpus text files into a directory named input_data/ within the same folder as the script.
-
-Run the extraction script from your terminal: python verb_extraction.py
-
-The script will output the cleaned dataset and concordance frequencies into a new file.
-
-Acknowledgements
-We acknowledge the Centre for Indian Language Technology (CFILT) at IIT Bombay for providing access to the Marathi WordNet database index (idx_verb), which was essential for mapping the extracted verbs to their semantic sense identifiers.
-
+**Required Python Libraries (handled within the notebook):**
+```bash
+pip install transformers datasets scikit-learn torch pandas numpy
